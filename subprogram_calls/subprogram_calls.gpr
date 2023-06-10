@@ -1,0 +1,22 @@
+with "config/subprogram_calls_config.gpr";
+project Subprogram_Calls is
+
+   for Source_Dirs use ("src/", "config/");
+   for Object_Dir use "obj/" & Subprogram_Calls_Config.Build_Profile;
+   for Create_Missing_Dirs use "True";
+   for Exec_Dir use "bin";
+   for Main use ("subprogram_calls.adb");
+
+   package Compiler is
+      for Default_Switches ("Ada") use Subprogram_Calls_Config.Ada_Compiler_Switches;
+   end Compiler;
+
+   package Binder is
+      for Switches ("Ada") use ("-Es"); --  Symbolic traceback
+   end Binder;
+
+   package Install is
+      for Artifacts (".") use ("share");
+   end Install;
+
+end Subprogram_Calls;
